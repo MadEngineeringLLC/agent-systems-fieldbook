@@ -1,0 +1,69 @@
+schema_version: 1.0.0
+principles:
+  - primary_sources_first
+  - engagement_is_discovery_not_evidence
+  - immutable_references_when_available
+  - respect_access_controls_terms_and_rate_limits
+  - no_bulk_copying
+source_classes:
+  official:
+    priority: 1
+    examples:
+      - official documentation
+      - specifications
+      - release notes
+      - vendor source repositories
+  maintainer_repository:
+    priority: 2
+    examples:
+      - repository files at immutable commits
+      - releases
+      - pull requests
+      - issues
+      - design discussions
+  reproducible_evidence:
+    priority: 3
+    examples:
+      - tests
+      - benchmarks with methodology
+      - runnable demonstrations
+      - independent reproductions
+  practitioner_primary:
+    priority: 4
+    examples:
+      - X posts or articles by implementers
+      - engineering blogs with source links
+      - incident reports
+  secondary_analysis:
+    priority: 5
+    examples:
+      - comparative analysis
+      - tutorials that add distinct interpretation
+initial_watchlist:
+  products:
+    - grok-bot
+    - grok
+    - claude-code
+    - gemini-cli
+    - cursor
+    - codex
+    - openai-agents-sdk
+    - model-context-protocol
+  source_domains:
+    - docs.x.ai
+    - github.com
+    - agents.md
+    - modelcontextprotocol.io
+    - developers.openai.com
+    - docs.anthropic.com
+    - ai.google.dev
+    - developers.google.com
+    - docs.cursor.com
+search_constraints:
+  max_candidates_per_source_run: 12
+  max_promotions_per_batch: 5
+  default_lookback_days: 7
+  first_run_lookback_days: 30
+  stop_on_authentication_block: true
+  no_access_control_bypass: true
+  no_rate_limit_bypass: true

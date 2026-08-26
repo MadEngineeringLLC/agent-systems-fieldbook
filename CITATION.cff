@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use the Agent Systems Fieldbook in research or published work, cite the repository and the original artifact sources."
+title: "Agent Systems Fieldbook"
+type: dataset
+version: 0.1.0
+date-released: 2026-08-25
+authors:
+  - family-names: Madison
+    given-names: Drew
+  - name: Agent Systems Fieldbook contributors
+abstract: >-
+  An evaluated, attributed, machine-readable collection of prompts, skills,
+  rules, orchestration patterns, control loops, state systems, and related
+  agent-system artifacts.
+license: Apache-2.0
+keywords:
+  - ai-agents
+  - agent-systems
+  - prompts
+  - skills
+  - orchestration
+  - model-context-protocol
+  - agents-md
+repository-code: "https://github.com/MadEngineeringLLC/agent-systems-fieldbook"

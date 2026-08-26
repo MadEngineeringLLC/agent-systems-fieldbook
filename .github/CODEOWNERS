@@ -1,0 +1,3 @@
+# Default review ownership
+# GitHub CODEOWNERS requires a user or team, not an organization login.
+* @drewmad

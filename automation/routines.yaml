@@ -1,0 +1,108 @@
+schema_version: 1.0.0
+timezone: America/New_York
+activation_rule: >-
+  Run every workflow successfully once, review its output, then save it as a skill
+  and schedule it. Do not activate all routines at bootstrap.
+default_limits:
+  candidate_cap: 12
+  promotion_cap: 5
+  lookback_days: 7
+  maximum_source_pages_per_candidate: 5
+  stop_on_authentication_block: true
+  stop_on_validation_failure: true
+  merge_allowed: false
+routines:
+  - id: github-official-delta-scout
+    owner: Fieldbook Steward
+    logical_role: signal_scout
+    schedule: Monday, Wednesday, and Friday at 06:15
+    inputs:
+      source_classes: [official, maintainer_repository, reproducible_evidence]
+      lookback_days: 7
+      focus_rotation:
+        - rules-and-agent-instructions
+        - orchestration-and-control-loops
+        - state-memory-and-resumability
+        - mcp-tools-resources-and-authorization
+        - evaluation-and-guardrails
+    output: staging candidate envelopes only
+    external_write: none
+
+  - id: x-practitioner-delta-scout
+    owner: Fieldbook Steward
+    logical_role: signal_scout
+    schedule: Tuesday and Thursday at 06:15
+    inputs:
+      source_classes: [practitioner_primary]
+      lookback_days: 7
+      require_primary_evidence_link_when_available: true
+      engagement_weight_cap: 1
+    output: staging candidate envelopes only
+    external_write: none
+
+  - id: evaluate-current-batch
+    owner: Fieldbook Steward
+    logical_role: artifact_gatekeeper
+    schedule: after a scout batch when event triggers are supported; otherwise manual
+    limits:
+      candidate_cap: 12
+    output:
+      - accepted evaluations for curator
+      - sanitized watch records
+      - sanitized rejection records
+      - sanitized quarantine records
+    external_write: none
+
+  - id: curate-accepted-batch
+    owner: Fieldbook Steward
+    logical_role: archive_curator
+    schedule: >-
+      manual after evaluation until three consecutive clean runs; then event-triggered
+      after a reviewed evaluation batch when supported
+    limits:
+      promotion_cap: 5
+    branch_pattern: bot/ingest/YYYY-MM-DD-batch-id
+    output: review pull request
+    approvals:
+      merge: human_required
+      settings_changes: prohibited
+      writes_outside_allowed_paths: prohibited
+
+  - id: weekly-agent-systems-journal
+    owner: Fieldbook Steward
+    logical_role: journal_scribe
+    schedule: Friday at 16:30
+    prerequisites:
+      - reviewed source batch exists
+      - at least one material verified development or fieldbook change exists
+    output: review pull request under journal/
+    skip_condition: no material evidence
+
+  - id: monthly-fieldbook-cartography
+    owner: Fieldbook Steward
+    logical_role: archive_cartographer
+    schedule: first Monday of each month at 07:30
+    inputs:
+      - catalog
+      - evaluation records
+      - journal index
+      - calibration set
+    output:
+      - audit report
+      - optional proposal pull request
+    prohibited:
+      - direct taxonomy changes
+      - direct rubric changes
+      - direct schema changes
+      - self-merge
+
+  - id: stale-source-revalidation
+    owner: Fieldbook Steward
+    logical_role: artifact_gatekeeper
+    schedule: monthly, staggered from cartography
+    selection:
+      - source unavailable or changed
+      - last_verified_at older than 180 days
+      - product-specific artifact after material product release
+      - security or license concern reported
+    output: review pull request with corrected status or metadata

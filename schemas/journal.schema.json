@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-systems-fieldbook.example/schemas/journal.schema.json",
+  "title": "Agent Systems Fieldbook journal front matter",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "id",
+    "period_start",
+    "period_end",
+    "published_at",
+    "status",
+    "sources_reviewed",
+    "artifact_ids",
+    "confidence"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "id": {
+      "type": "string"
+    },
+    "period_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "period_end": {
+      "type": "string",
+      "format": "date"
+    },
+    "published_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "enum": [
+        "bootstrap",
+        "published",
+        "corrected"
+      ]
+    },
+    "sources_reviewed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "artifact_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "confidence": {
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

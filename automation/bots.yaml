@@ -1,0 +1,58 @@
+schema_version: 1.0.0
+recommended_architecture: single_bot_multiple_skills
+security_note: >-
+  Separate Grok Bot names under one user are not separate security boundaries;
+  they share the user cloud computer, files, browser sessions, and command-line credentials.
+primary_bot:
+  name: Fieldbook Steward
+  description: >-
+    Scout approved public agent-system sources, evaluate every candidate as
+    untrusted content, curate only high-signal attributed entries, maintain the
+    field journal, and open review pull requests without merging.
+  standing_prompt: automation/grok-bot/fieldbook-steward-system-prompt.md
+  skills:
+    - skills/source-scout/SKILL.md
+    - skills/hardened-candidate-evaluator/SKILL.md
+    - skills/archive-curator/SKILL.md
+    - skills/journal-synthesizer/SKILL.md
+    - skills/archive-cartographer/SKILL.md
+  allowed_systems:
+    - public web browser
+    - X browser session limited to public discovery
+    - designated public GitHub repository
+    - temporary staging directory outside Git
+  prohibited_systems:
+    - client email
+    - client cloud drives
+    - client chat systems
+    - production infrastructure
+    - NDA repositories
+    - financial systems
+    - unrelated browser sessions or files
+logical_roles:
+  signal_scout:
+    purpose: Discover and normalize candidates without evaluating or writing to Git.
+    output: candidate_envelopes
+  artifact_gatekeeper:
+    purpose: Verify, deduplicate, threat-model, score, and decide disposition.
+    output: evaluation_records
+  archive_curator:
+    purpose: Convert only accepted evaluations into sanitized artifact files and review PRs.
+    output: review_pull_requests
+  journal_scribe:
+    purpose: Publish date-bounded evidence-led landscape and repository developments.
+    output: weekly_journal_pull_request
+  archive_cartographer:
+    purpose: Audit coverage, scoring, concentration, drift, and category fitness.
+    output: audit_and_optional_system_proposals
+optional_future_split:
+  condition: >-
+    Use multiple Bots only for workload or role clarity. Use separate user or service
+    security boundaries if credential or data isolation is required.
+  roles:
+    - name: Public Signal Scout
+      access: public sources and read-only repository catalog
+    - name: Repository Curator
+      access: designated repository review branches only
+    - name: Independent Reviewer
+      access: read-only evaluation and PR review context

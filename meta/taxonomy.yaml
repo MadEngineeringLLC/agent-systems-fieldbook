@@ -1,0 +1,71 @@
+schema_name: agent-systems-fieldbook-taxonomy
+schema_version: 1.0.0
+effective_date: 2026-08-25
+primary_types:
+  prompt:
+    folder: artifacts/prompts
+    definition: Reusable model instruction whose primary value is wording, reasoning structure, or output contract.
+  skill:
+    folder: artifacts/skills
+    definition: Repeatable procedure with trigger, inputs, steps, validation, failure handling, output, and approvals.
+  rule-set:
+    folder: artifacts/rules
+    definition: Persistent repository or environment operating instructions such as AGENTS.md or CLAUDE.md.
+  goal:
+    folder: artifacts/goals
+    definition: Outcome specification with scope, success criteria, constraints, budget, and termination.
+  agent-definition:
+    folder: artifacts/agent-definitions
+    definition: Named role with responsibility, authority, tools, inputs, outputs, escalation, and limits.
+  routine:
+    folder: artifacts/routines
+    definition: Scheduled or event-triggered invocation of a bounded workflow or skill.
+  workflow:
+    folder: artifacts/workflows
+    definition: Finite ordered process combining reasoning, tools, systems, or human actions.
+  orchestration-pattern:
+    folder: artifacts/orchestration
+    definition: Coordination mechanism such as routing, delegation, fan-out, review, arbitration, or handoff.
+  control-loop:
+    folder: artifacts/control-loops
+    definition: Iterative observe-act-measure-update mechanism with explicit termination.
+  state-memory-pattern:
+    folder: artifacts/state-and-memory
+    definition: Checkpoint, ledger, memory, context, resumability, provenance, or state-isolation mechanism.
+  multi-agent-team:
+    folder: artifacts/teams
+    definition: Coordinated agent roles with communication contracts and integration or decision mechanism.
+  mcp-artifact:
+    folder: artifacts/mcp
+    definition: MCP server, tool, resource, prompt, contract, authorization, or integration pattern.
+  tooling:
+    folder: artifacts/tooling
+    definition: Plugin, connector, harness, validator, automation, or supporting infrastructure.
+  evaluation:
+    folder: artifacts/evaluations
+    definition: Benchmark, test harness, rubric, review pattern, adversarial test, or evaluation workflow.
+  guardrail:
+    folder: artifacts/guardrails
+    definition: Approval, least privilege, validation, injection containment, sandbox, or audit control.
+  failure-analysis:
+    folder: artifacts/failures
+    definition: Evidence-backed failure, root cause, impact, and corrective mechanism.
+  use-case:
+    folder: artifacts/use-cases
+    definition: Concrete evidence-backed application of an agent system to a job to be done.
+tag_namespaces:
+  product:
+    examples: [grok-bot, claude-code, codex, gemini-cli, cursor, mcp, tool-agnostic]
+  mechanism:
+    examples: [read-evaluate-write, fan-out-fan-in, critic-gate, checkpoint-resume, bounded-loop, human-approval, structured-output]
+  lifecycle:
+    allowed: [design, build, test, deploy, operate, incident]
+  evidence:
+    allowed: [conceptual, demonstrated, reproduced, production-reported, production-verified]
+  domain:
+    examples: [software-engineering, research, security, knowledge-management, operations]
+new_primary_type_requirements:
+  minimum_misclassified_artifacts: 5
+  proposal_required: true
+  migration_plan_required: true
+  calibration_required: true

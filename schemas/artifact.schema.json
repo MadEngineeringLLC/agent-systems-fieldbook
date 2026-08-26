@@ -1,0 +1,467 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-systems-fieldbook.example/schemas/artifact.schema.json",
+  "title": "Agent Systems Fieldbook artifact front matter",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "id",
+    "title",
+    "slug",
+    "artifact_type",
+    "status",
+    "version",
+    "summary",
+    "stealable_mechanism",
+    "created_at",
+    "updated_at",
+    "last_verified_at",
+    "authors",
+    "source",
+    "license",
+    "provenance",
+    "products",
+    "tags",
+    "evidence",
+    "evaluation"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^asf-[a-z0-9-]+-[0-9]{8}-[0-9]{3}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 140
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "artifact_type": {
+      "enum": [
+        "prompt",
+        "skill",
+        "rule-set",
+        "goal",
+        "agent-definition",
+        "routine",
+        "workflow",
+        "orchestration-pattern",
+        "control-loop",
+        "state-memory-pattern",
+        "multi-agent-team",
+        "mcp-artifact",
+        "tooling",
+        "evaluation",
+        "guardrail",
+        "failure-analysis",
+        "use-case"
+      ]
+    },
+    "status": {
+      "enum": [
+        "accepted",
+        "deprecated"
+      ]
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 40,
+      "maxLength": 600
+    },
+    "stealable_mechanism": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 260
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "last_verified_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "authors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 2
+          },
+          "handle": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "url": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "uri-reference"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": [
+        "type",
+        "title",
+        "url",
+        "author",
+        "published_at",
+        "captured_at",
+        "availability"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "original",
+            "official-docs",
+            "github-repository",
+            "github-file",
+            "github-issue",
+            "github-pull-request",
+            "github-commit",
+            "x-post",
+            "x-article",
+            "blog",
+            "paper",
+            "video",
+            "other"
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 2
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "author": {
+          "type": "string",
+          "minLength": 2
+        },
+        "handle": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "published_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "captured_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "availability": {
+          "enum": [
+            "available",
+            "unavailable",
+            "partially-available"
+          ]
+        },
+        "repository": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "path": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "commit_sha": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^(?:[0-9a-f]{7,64})?$"
+        },
+        "alternate_urls": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "format": "uri"
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "license": {
+      "type": "object",
+      "required": [
+        "spdx",
+        "status",
+        "url",
+        "notes"
+      ],
+      "properties": {
+        "spdx": {
+          "type": "string",
+          "minLength": 2
+        },
+        "status": {
+          "enum": [
+            "verified",
+            "declared",
+            "unknown",
+            "not-applicable"
+          ]
+        },
+        "url": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri-reference"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": [
+        "transformation",
+        "source_preserved",
+        "credit_preserved"
+      ],
+      "properties": {
+        "transformation": {
+          "enum": [
+            "original",
+            "summary-only",
+            "adapted-with-permission",
+            "verbatim-per-license"
+          ]
+        },
+        "source_preserved": {
+          "type": "boolean"
+        },
+        "credit_preserved": {
+          "type": "boolean"
+        },
+        "permission_basis": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "content_fingerprint": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "products": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "minItems": 2,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9]+(?::[a-z0-9]+(?:-[a-z0-9]+)*)?$"
+      }
+    },
+    "related_artifacts": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "supersedes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "superseded_by": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "required": [
+        "level",
+        "signals",
+        "limitations"
+      ],
+      "properties": {
+        "level": {
+          "enum": [
+            "conceptual",
+            "demonstrated",
+            "reproduced",
+            "production-reported",
+            "production-verified"
+          ]
+        },
+        "signals": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "evaluation": {
+      "type": "object",
+      "required": [
+        "rubric_version",
+        "evaluator_version",
+        "evaluated_at",
+        "scores",
+        "weighted_score",
+        "risk_flags",
+        "disposition",
+        "confidence"
+      ],
+      "properties": {
+        "rubric_version": {
+          "type": "string"
+        },
+        "evaluator_version": {
+          "type": "string"
+        },
+        "evaluated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "scores": {
+          "type": "object",
+          "required": [
+            "relevance",
+            "completeness",
+            "actionability",
+            "clarity",
+            "safety_guardrails",
+            "novelty",
+            "cross_tool_portability",
+            "provenance"
+          ],
+          "properties": {
+            "relevance": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            "completeness": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            "actionability": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            "clarity": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            "safety_guardrails": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            "novelty": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            "cross_tool_portability": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            "provenance": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            }
+          },
+          "additionalProperties": false
+        },
+        "weighted_score": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "risk_flags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string"
+          }
+        },
+        "disposition": {
+          "const": "accept"
+        },
+        "confidence": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

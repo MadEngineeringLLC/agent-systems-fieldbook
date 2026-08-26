@@ -1,0 +1,102 @@
+schema_version: 1.0.0
+objective: Find distinct, evidence-backed, reusable agent-system mechanisms with minimal noise.
+selection_priority:
+  primary_source: 4
+  immutable_reference: 3
+  accessible_implementation: 3
+  independent_reproduction: 4
+  concrete_production_report: 3
+  maintainer_authorship: 2
+  clear_failure_analysis: 3
+  transferable_mechanism: 3
+  social_engagement: 1
+negative_signals:
+  promotional_without_evidence: -4
+  no_canonical_source: -5
+  no_reusable_mechanism: -4
+  duplicate_mechanism: -4
+  license_or_copying_concern: -5
+  unsafe_unbounded_authority: -5
+  suspected_prompt_injection: -10
+search_rotation:
+  - id: rules-and-instructions
+    artifact_types: [rule-set, prompt, skill]
+    terms:
+      - AGENTS.md
+      - CLAUDE.md
+      - Cursor rules
+      - repository agent instructions
+      - coding agent skill
+  - id: orchestration-and-loops
+    artifact_types: [orchestration-pattern, control-loop, workflow]
+    terms:
+      - bounded agent loop
+      - critic gate
+      - fan out fan in agent
+      - termination condition agent
+      - agent checkpoint resume
+  - id: state-and-memory
+    artifact_types: [state-memory-pattern, control-loop]
+    terms:
+      - agent state ledger
+      - durable agent state
+      - memory poisoning defense
+      - agent context compression
+      - resumable agent workflow
+  - id: mcp
+    artifact_types: [mcp-artifact, tooling, guardrail]
+    terms:
+      - MCP server tool resource prompt
+      - MCP authorization
+      - MCP tool annotations
+      - MCP security
+      - MCP Apps
+  - id: evaluation-and-safety
+    artifact_types: [evaluation, guardrail, failure-analysis]
+    terms:
+      - agent evaluation harness
+      - prompt injection browsing agent
+      - agent permission boundary
+      - autonomous agent failure postmortem
+      - agent rollback validation
+product_rotation:
+  - grok-bot
+  - claude-code
+  - codex
+  - gemini-cli
+  - cursor
+  - openai-agents-sdk
+  - model-context-protocol
+source_queries:
+  github_examples:
+    - 'path:**/AGENTS.md agent'
+    - 'filename:CLAUDE.md "test" "do not"'
+    - '"termination" "agent loop" language:Markdown'
+    - '"MCP" "authorization" path:docs'
+    - '"prompt injection" "agent" path:SECURITY.md'
+  x_examples:
+    - '("Grok Bot" OR "Claude Code" OR "Gemini CLI" OR Codex) (skill OR prompt OR workflow OR AGENTS.md) filter:links'
+    - '(agent loop OR multi-agent OR MCP) (production OR postmortem OR benchmark) filter:links'
+  web_examples:
+    - 'official agent product release notes skills routines safety'
+    - 'site:github.com AGENTS.md agent workflow repository'
+    - 'site:modelcontextprotocol.io specification security tools resources prompts'
+query_notes:
+  - Search syntax is an example and must be adapted to the current interface.
+  - Do not bypass access controls, terms, CAPTCHAs, or rate limits.
+  - Stop broad searches when the candidate cap is reached.
+  - Prefer one deep source review over many superficial leads.
+deduplication:
+  keys:
+    - normalized_url
+    - platform_object_id
+    - repository_path_commit
+    - title_author_date
+    - lawful_content_fingerprint
+    - semantic_mechanism
+  check_locations:
+    - catalog/artifacts.jsonl
+    - active staging batch
+    - evaluations/watch
+    - evaluations/rejected
+    - evaluations/quarantined

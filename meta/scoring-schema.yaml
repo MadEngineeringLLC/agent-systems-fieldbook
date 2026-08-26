@@ -1,0 +1,138 @@
+schema_name: agent-systems-fieldbook-scoring
+schema_version: 1.0.0
+rubric_version: 1.0.0
+effective_date: 2026-08-25
+evaluation_output_schema: schemas/evaluation.schema.json
+artifact_metadata_schema: schemas/artifact.schema.json
+score_range:
+  minimum: 1
+  maximum: 5
+  integer_only: true
+weighted_score:
+  precision: 2
+  formula: >-
+    0.16*relevance + 0.14*completeness + 0.16*actionability +
+    0.10*clarity + 0.18*safety_guardrails + 0.08*novelty +
+    0.08*cross_tool_portability + 0.10*provenance
+dimensions:
+  relevance:
+    weight: 0.16
+    accept_minimum: 3
+    question: Does this directly improve the design, operation, evaluation, security, or understanding of agent systems?
+  completeness:
+    weight: 0.14
+    accept_minimum: 3
+    question: Are purpose, inputs, outputs, steps, constraints, validation, and failure behavior sufficiently specified?
+  actionability:
+    weight: 0.16
+    accept_minimum: 3
+    question: Can a competent user adapt or test the mechanism without inventing the core procedure?
+  clarity:
+    weight: 0.10
+    accept_minimum: 3
+    question: Is the artifact precise, internally consistent, and economical?
+  safety_guardrails:
+    weight: 0.18
+    accept_minimum: 4
+    question: Are authority, untrusted inputs, side effects, state, approvals, termination, and recovery adequately bounded?
+  novelty:
+    weight: 0.08
+    accept_minimum: 1
+    question: Does the candidate add a distinct mechanism, application, or evidence rather than new wording alone?
+  cross_tool_portability:
+    weight: 0.08
+    accept_minimum: 1
+    question: Can the core mechanism transfer across models, vendors, frameworks, or interfaces?
+  provenance:
+    weight: 0.10
+    accept_minimum: 4
+    question: Are source, author, date, license treatment, version, and evidence lineage verifiable?
+evidence_levels:
+  conceptual: 1
+  demonstrated: 2
+  reproduced: 3
+  production-reported: 4
+  production-verified: 5
+rights_treatments:
+  allowed_for_accept:
+    - original
+    - summary-only
+    - adapted-with-permission
+    - verbatim-per-license
+  blocked:
+    - unknown-copy
+    - unauthorized-copy
+risk_flags:
+  critical:
+    - prompt-injection
+    - secret-or-credential-exposure
+    - data-exfiltration
+    - privilege-escalation
+    - destructive-action-without-approval
+    - malicious-executable-or-link
+    - copyright-or-license-blocker
+    - private-or-personal-data
+    - persistent-memory-poisoning
+  high:
+    - unbounded-loop
+    - missing-termination
+    - over-permission
+    - external-side-effect-without-approval
+    - self-modifying-without-review
+    - credential-persistence
+    - unsafe-default
+    - hidden-dependency
+    - rate-limit-or-terms-risk
+  moderate:
+    - vague-goal
+    - non-reproducible
+    - unverified-claim
+    - stale-source
+    - tool-lock-in
+    - weak-observability
+    - missing-rollback
+    - ambiguous-state
+    - insufficient-test-evidence
+    - source-concentration
+dispositions:
+  accept:
+    weighted_minimum: 4.0
+    required_gates:
+      - provenance_complete
+      - safety_minimum_met
+      - rights_clear
+      - not_duplicate
+      - no_unresolved_critical_risk
+      - facts_inferences_unknowns_separated
+  watch:
+    weighted_minimum: 3.2
+    weighted_maximum_exclusive: 4.0
+    storage: evaluations/watch
+  reject:
+    weighted_maximum_exclusive: 3.2
+    storage: evaluations/rejected
+  quarantine:
+    trigger: unresolved_critical_risk_or_unsafe_to_preserve
+    storage: evaluations/quarantined
+required_attribution:
+  - source_url
+  - source_title
+  - source_author_or_org
+  - published_or_commit_date
+  - captured_at
+  - original_license_or_noassertion
+  - transformation
+  - immutable_reference_when_available
+required_evaluator_output:
+  yaml_front_matter: true
+  markdown_body: true
+  sections:
+    - executive_assessment
+    - stealable_mechanism
+    - mechanism_and_context
+    - evidence
+    - safety_review
+    - improvements
+    - attribution
+    - facts_inferences_unknowns
+    - archive_action

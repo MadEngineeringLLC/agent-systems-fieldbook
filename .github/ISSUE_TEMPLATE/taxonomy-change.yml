@@ -1,0 +1,55 @@
+name: Taxonomy or rubric proposal
+description: Identify a system-level classification or evaluation problem.
+title: "[System proposal]: "
+labels:
+  - proposal
+body:
+  - type: markdown
+    attributes:
+      value: |
+        System changes require repository evidence, calibration, migration effects, and human approval. Use `proposals/template.md` for the complete proposal in a pull request.
+  - type: dropdown
+    id: area
+    attributes:
+      label: Affected system
+      options:
+        - taxonomy
+        - scoring rubric
+        - risk flags
+        - schema
+        - provenance policy
+        - automation
+        - governance
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Observed problem
+      description: Cite artifact IDs, score distributions, reviewer disagreements, or retrieval failures.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Smallest proposed change
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Compatibility and migration impact
+    validations:
+      required: true
+  - type: textarea
+    id: calibration
+    attributes:
+      label: Calibration or test plan
+    validations:
+      required: true
+  - type: textarea
+    id: rollback
+    attributes:
+      label: Rollback condition
+    validations:
+      required: true

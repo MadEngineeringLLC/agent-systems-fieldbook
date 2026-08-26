@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security report
+    url: https://github.com/MadEngineeringLLC/agent-systems-fieldbook/security
+    about: Use private vulnerability reporting; do not publish sensitive details.
+  - name: Contribution guide
+    url: https://github.com/MadEngineeringLLC/agent-systems-fieldbook/blob/main/CONTRIBUTING.md
+    about: Review the quality, attribution, and validation requirements before submitting.
