@@ -29,6 +29,7 @@ The fieldbook is designed for two audiences:
 | Evaluate a candidate | [`skills/hardened-candidate-evaluator/SKILL.md`](skills/hardened-candidate-evaluator/SKILL.md) |
 | Submit an artifact | [`CONTRIBUTING.md`](CONTRIBUTING.md) |
 | Run the Grok Bot workflow | [`automation/grok-bot/first-run.md`](automation/grok-bot/first-run.md) |
+| Browse Grok Bot Channels | [`docs/indexes/grok-bot.md`](docs/indexes/grok-bot.md) |
 | Follow changes in the field | [`journal/`](journal/README.md) |
 | Propose taxonomy or rubric changes | [`proposals/`](proposals/README.md) |
 
