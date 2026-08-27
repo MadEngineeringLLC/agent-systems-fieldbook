@@ -57,7 +57,7 @@ tag_namespaces:
   product:
     examples: [grok-bot, claude-code, codex, gemini-cli, cursor, mcp, tool-agnostic]
   mechanism:
-    examples: [read-evaluate-write, fan-out-fan-in, critic-gate, checkpoint-resume, bounded-loop, human-approval, structured-output]
+    examples: [read-evaluate-write, fan-out-fan-in, critic-gate, checkpoint-resume, bounded-loop, human-approval, structured-output, group-chat, chief-of-staff-orchestrator, visible-handoff]
   lifecycle:
     allowed: [design, build, test, deploy, operate, incident]
   evidence:

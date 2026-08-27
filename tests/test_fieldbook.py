@@ -64,14 +64,16 @@ class CatalogTests(unittest.TestCase):
                 "artifacts/control-loops/mcp-2026-07-28-multi-round-trip-tool-calls.md",
                 "artifacts/guardrails/mcp-2026-07-28-auth-ssrf-handle-guardrails.md",
                 "artifacts/mcp/mcp-2026-07-28-untrusted-tool-annotations-and-handles.md",
+                "artifacts/orchestration/grok-bot-chief-of-staff-specialist-lanes.md",
                 "artifacts/rules/read-only-research-agent/AGENTS.md",
                 "artifacts/skills/change-verification-gate.md",
+                "artifacts/teams/grok-bot-group-chat-visible-handoff.md",
             ],
         )
 
     def test_records_are_deterministic_and_machine_readable(self) -> None:
         records = artifact_records(ROOT)
-        self.assertEqual(len(records), 6)
+        self.assertEqual(len(records), 8)
         self.assertEqual(
             [record["id"] for record in records],
             [
@@ -79,6 +81,8 @@ class CatalogTests(unittest.TestCase):
                 "asf-control-loop-20260826-002",
                 "asf-guardrail-20260826-003",
                 "asf-mcp-artifact-20260826-001",
+                "asf-multi-agent-team-20260826-001",
+                "asf-orchestration-pattern-20260826-001",
                 "asf-rule-set-20260825-002",
                 "asf-skill-20260825-001",
             ],
@@ -88,17 +92,20 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(decoded, records)
         csv_text = render_catalog_csv(records)
         self.assertIn("stealable_mechanism", csv_text.splitlines()[0])
-        self.assertEqual(len(csv_text.splitlines()), 7)
+        self.assertEqual(len(csv_text.splitlines()), 9)
 
     def test_journal_index_projection(self) -> None:
         paths = journal_files(ROOT)
-        self.assertEqual(len(paths), 2)
+        self.assertEqual(len(paths), 3)
         record = journal_record(paths[0], ROOT)
         self.assertEqual(record["id"], "journal-2026-bootstrap")
         self.assertEqual(len(record["artifact_ids"]), 3)
         first_run = journal_record(paths[1], ROOT)
         self.assertEqual(first_run["id"], "journal-2026-08-26-first-run")
         self.assertEqual(len(first_run["artifact_ids"]), 3)
+        channels = journal_record(paths[2], ROOT)
+        self.assertEqual(channels["id"], "journal-2026-08-26-grok-bot-channels")
+        self.assertEqual(len(channels["artifact_ids"]), 2)
 
 
 if __name__ == "__main__":
